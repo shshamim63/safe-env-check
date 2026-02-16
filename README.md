@@ -49,5 +49,5 @@ module.exports = {
 };
 ```
 ```bash
-  npx safe-env-check env.schema.js
+npx safe-env-check env.schema.js
 ```
