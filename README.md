@@ -48,6 +48,11 @@ module.exports = {
   NODE_ENV: { type: "enum", values: ["dev", "prod"] },
 };
 ```
+
 ```bash
 npx safe-env-check env.schema.js
 ```
+
+## License
+
+MIT © Shakhawat Hossain
