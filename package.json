@@ -1,6 +1,6 @@
 {
   "name": "@safe-hand/safe-env-check",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
