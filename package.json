@@ -1,6 +1,6 @@
 {
   "name": "@safe-hand/safe-env-check",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -13,7 +13,7 @@
     "lint": "tsc --noEmit"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "@types/jest": "^30.0.0",
