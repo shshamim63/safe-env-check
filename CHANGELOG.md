@@ -10,13 +10,22 @@ and [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+
 - Placeholder for upcoming changes
 
 ---
 
+## [1.0.3] - 2026-02-18
+
+### Added
+
+- Initial CHANGELOG.md for tracking
+- Release workflow setup
+
 ## [1.0.2] - 2026-02-18
 
 ### Added
+
 - Initial npm release (version already existed)
 - Schema-based environment validation
 - CLI support
@@ -26,4 +35,5 @@ and [Semantic Versioning](https://semver.org/).
 - Required and default value support
 
 ### Fixed
+
 - None yet
