@@ -20,7 +20,7 @@ const printHelp = () => {
 
 
     Usage:
-      save-env-check <schema-file> [opttions]
+      safe-env-check <schema-file> [opttions]
 
 
     Options:
@@ -34,10 +34,10 @@ const printHelp = () => {
 
     
     Examples:
-      save-env-check env.schema.js
-      save-env-check --schema env.schema.js --strict
-      save-env-check env.schema.js --env-file .env.production
-      save-env-check env.schema.js --foramt json
+      safe-env-check env.schema.js
+      safe-env-check --schema env.schema.js --strict
+      safe-env-check env.schema.js --env-file .env.production
+      safe-env-check env.schema.js --format json
     `);
 };
 
@@ -73,9 +73,10 @@ const format = getArg("--format");
 
 try {
   const fullPath = path.resolve(process.cwd(), schemaFile);
-  console.log("I am here");
-  if (!fs.existsSync(fullPath))
+
+  if (!fs.existsSync(fullPath)) {
     throw new Error(`Schema file not found: ${schemaFile}`);
+  }
 
   const schema = require(fullPath);
 
@@ -96,6 +97,6 @@ try {
     console.log("✅ Environment variables are valid");
   }
 } catch (error) {
-  console.log(error);
+  console.error(error);
   process.exit(1);
 }

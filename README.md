@@ -135,6 +135,10 @@ Run validation:
 
 ```bash
 npx safe-env-check env.schema.js
+npx safe-env-check env.schema.js
+npx safe-env-check --schema env.schema.js --strict
+npx safe-env-check env.schema.js --env-file .env.production
+npx safe-env-check env.schema.js --format json
 ```
 
 ## License
