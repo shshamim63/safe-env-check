@@ -1,6 +1,11 @@
 {
   "name": "@safe-hand/safe-env-check",
   "version": "1.0.3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shshamim63/safe-env-check.git"
+  },
+  "homepage": "https://github.com/your-username/your-repo#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
