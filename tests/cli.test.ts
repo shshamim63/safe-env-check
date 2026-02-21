@@ -95,6 +95,33 @@ describe("CLI", () => {
     expect(exitSpy).toHaveBeenCalledWith(1);
   });
 
+  test("loads custom env file when --env-file is provided", () => {
+    const fs = require("fs");
+    const dotenv = require("dotenv");
+
+    fs.existsSync.mockReturnValue(true);
+
+    const schemaPath = path.resolve(process.cwd(), "env.schema.js");
+
+    jest.doMock(schemaPath, () => ({}), { virtual: true });
+
+    process.argv = [
+      "node",
+      "cli.ts",
+      "env.schema.js",
+      "--env-file",
+      ".env.production",
+    ];
+
+    mockValidateEnv.mockImplementation(() => ({}));
+
+    require("../src/cli");
+
+    expect(dotenv.config).toHaveBeenCalledWith({
+      path: ".env.production",
+    });
+  });
+
   test("calls validateEnv with correct options", () => {
     const fs = require("fs");
     fs.existsSync.mockReturnValue(true);
