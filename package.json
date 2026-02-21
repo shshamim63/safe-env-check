@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/shshamim63/safe-env-check.git"
   },
-  "homepage": "https://github.com/your-username/your-repo#readme",
+  "homepage": "https://github.com/shshamim63/safe-env-check#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
