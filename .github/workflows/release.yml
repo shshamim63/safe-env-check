@@ -8,6 +8,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # REQUIRED for GitHub Release
+
     steps:
       - uses: actions/checkout@v3
 
@@ -17,20 +20,19 @@ jobs:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
+      - run: npm ci
+      - run: npm run build
 
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release from CHANGELOG
         uses: ncipollo/release-action@v1
-        env:
-          token: ${{secrets.GITHUB_TOKEN}}
         with:
           tag: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          bodyFile: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
