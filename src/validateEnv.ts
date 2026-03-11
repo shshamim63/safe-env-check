@@ -5,12 +5,12 @@ import { parseValue } from "./validators";
 
 export const validateEnv = <T extends EnvSchema>(
   schema: T,
-  options: ValidateEnvOptions,
+  options?: ValidateEnvOptions,
 ): InferEnv<T> => {
   const errors: string[] = [];
   const result: Partial<InferEnv<T>> = {};
 
-  const { strict, prefix, quiet, formatError } = options;
+  const { strict, prefix, quiet, formatError } = options ?? {};
 
   if (strict) {
     checkUnknownKeys(schema, prefix);
