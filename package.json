@@ -8,6 +8,9 @@
   "homepage": "https://github.com/shshamim63/safe-env-check#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "bin": {
     "safe-env-check": "dist/cli/index.js"
   },

@@ -1,7 +1,11 @@
+import dotenv from "dotenv";
+
 import { defaultErrorFormatter } from "./errors/errorFormatter";
 import { EnvSchema, InferEnv, ValidateEnvOptions } from "./types";
 import { resolveEnvKey } from "./utils/envResolver";
 import { parseValue } from "./validators";
+
+dotenv.config();
 
 export const validateEnv = <T extends EnvSchema>(
   schema: T,
