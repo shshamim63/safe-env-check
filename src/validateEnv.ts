@@ -10,7 +10,7 @@ export const validateEnv = <T extends EnvSchema>(
   const errors: string[] = [];
   const result: Partial<InferEnv<T>> = {};
 
-  const { strict, prefix, quiet, formatError } = options ?? {};
+  const { strict, prefix, formatError } = options ?? {};
 
   if (strict) {
     errors.push(...checkUnknownKeys(schema, prefix));
@@ -42,7 +42,7 @@ export const validateEnv = <T extends EnvSchema>(
     }
   }
 
-  if (errors.length && !quiet) {
+  if (errors.length) {
     const message = formatError
       ? formatError(errors)
       : defaultErrorFormatter(errors);

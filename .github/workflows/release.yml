@@ -31,7 +31,7 @@ jobs:
       - name: Extract release notes from CHANGELOG
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          awk "/^## \[${VERSION}\]/{found=1; next} found && /^## \[/{exit} found{print}" CHANGELOG.md > release_notes.md
+          awk -v version="$VERSION" '$0 == "## [" version "]" {found=1; next} found && /^## \[/{exit} found{print}' CHANGELOG.md > release_notes.md
 
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1

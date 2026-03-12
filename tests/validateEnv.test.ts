@@ -176,17 +176,6 @@ describe("validateEnv", () => {
     ).toThrow("CUSTOM: PORT is required");
   });
 
-  // ─── Quiet mode ──────────────────────────────────────────────────────────────
-
-  it("does not throw when quiet is true, even with validation errors", () => {
-    expect(() =>
-      validateEnv(
-        { PORT: { type: "number", required: true } },
-        { quiet: true },
-      ),
-    ).not.toThrow();
-  });
-
   // ─── Type validation errors ───────────────────────────────────────────────────
 
   it("throws when a number variable has a non-numeric value", () => {

@@ -9,26 +9,38 @@ export interface CliOptions {
   version?: boolean;
 }
 
+const valueFlags = new Set(["--schema", "--env-file", "--prefix", "--format"]);
+
 export const parseArgs = (args: string[]): CliOptions => {
   const options: CliOptions = {};
 
   const getArg = (flag: string) => {
     const index = args.indexOf(flag);
-
-    if (index === -1) return undefined;
-
     const next = args[index + 1];
-
-    if (!next || next.startsWith("--")) return undefined;
-
-    return next;
+    return index !== -1 && next && !next.startsWith("--") ? next : undefined;
   };
 
   const hasFlag = (flag: string) => args.includes(flag);
 
-  const positionalArgs = args.filter(
-    (arg, i) => !arg.startsWith("--") && !args[i - 1]?.startsWith("--"),
-  );
+  const positionalArgs: string[] = [];
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+
+    if (arg.startsWith("--")) {
+      if (valueFlags.has(arg)) {
+        i++;
+      }
+      continue;
+    }
+
+    if (
+      i === 0 ||
+      !args[i - 1].startsWith("--") ||
+      !valueFlags.has(args[i - 1])
+    ) {
+      positionalArgs.push(arg);
+    }
+  }
 
   options.schemaFile = getArg("--schema") || positionalArgs[0];
   options.envFile = getArg("--env-file");

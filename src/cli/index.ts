@@ -39,7 +39,7 @@ if (options.envFile) {
 const schemaPath = path.resolve(process.cwd(), options.schemaFile);
 
 if (!fs.existsSync(schemaPath)) {
-  console.error("❌ Schema file is required\n");
+  console.error(`❌ Schema file not found: ${schemaPath}\n`);
   printHelp();
   process.exit(1);
 }
@@ -50,7 +50,6 @@ try {
   validateEnv(schema, {
     strict: options.strict,
     prefix: options.prefix,
-    quiet: options.quiet,
     formatError: (errors) => {
       if (options.format === "json") {
         return jsonErrorFormatter(errors);

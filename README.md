@@ -159,9 +159,9 @@ DEBUG=true
 ```ts
 const schema = {
   DEBUG: {
-    type: "boolean";
+    type: "boolean",
   },
-}
+};
 ```
 
 ### Enum Validation
@@ -283,13 +283,16 @@ npx safe-env-check --schema env.schema.js
 
 ### CLI Options
 
-| Flag            | Description            |
-| --------------- | ---------------------- |
-| `--schema`      | schema file path       |
-| `--env-file`    | load a custom env file |
-| `--strict`      | enable strict mode     |
-| `--prefix`      | env variable prefix    |
-| `--format json` | output errors in JSON  |
+| Flag            | Description                                                                                    |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| `--schema`      | schema file path                                                                               |
+| `--env-file`    | load a custom env file                                                                         |
+| `--strict`      | enable strict mode                                                                             |
+| `--prefix`      | env variable prefix                                                                            |
+| `--format json` | output errors in JSON                                                                          |
+| `--quiet`       | Suppress the success message "✅ Environment variables are valid" (errors still exit non-zero) |
+
+|
 
 ### CLI Examples
 
@@ -309,6 +312,12 @@ npx safe-env-check env.schema.js --strict
 
 ```cmd
 npx safe-env-check env.schema.js --prefix API_
+```
+
+**Suppress success message**
+
+```cmd
+safe-env-check env.schema.js --quiet
 ```
 
 **Validate production env file**
