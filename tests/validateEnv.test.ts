@@ -117,7 +117,7 @@ describe("validateEnv", () => {
         { PORT: { type: "number", required: true } },
         { strict: true },
       ),
-    ).toThrow("Unknown env veriables: UNKNOWN");
+    ).toThrow("Unknown env variables: UNKNOWN");
   });
 
   it("ignores non-prefixed variables in strict+prefix mode", () => {
@@ -139,7 +139,7 @@ describe("validateEnv", () => {
         { PORT: { type: "number", required: true } },
         { strict: true, prefix: "APP_" },
       ),
-    ).toThrow("Unknown env veriables: APP_UNKNOWN");
+    ).toThrow("Unknown env variables: APP_UNKNOWN");
   });
 
   // ─── Error collection ────────────────────────────────────────────────────────

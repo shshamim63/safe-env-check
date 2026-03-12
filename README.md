@@ -146,8 +146,6 @@ Boolean values accept:
 ```bash
 true
 false
-1
-0
 ```
 
 **Example:**
@@ -239,19 +237,12 @@ JWT_SECRET=supersecret
 NODE_ENV=development
 ```
 
-### Using Custom .env File
-
-```ts
-validateEnv(schema, {
-  envFile: ".env.production",
-});
-```
-
 ## CLI Usage
 
 You can validate environment variables without writing code.
 
 This is useful for CI/CD pipelines.
+
 ```ts
 module.exports = {
   PORT: { type: "number", required: true },
@@ -260,14 +251,19 @@ module.exports = {
 ```
 
 **Run validation:**
+
 ```cmd
 npx safe-env-check env.schema.js
 ```
+
 or
+
 ```cmd
 npx safe-env-check --schema env.schema.js
 ```
-### CLI Options 
+
+### CLI Options
+
 | Flag            | Description            |
 | --------------- | ---------------------- |
 | `--schema`      | schema file path       |
@@ -277,51 +273,65 @@ npx safe-env-check --schema env.schema.js
 | `--format json` | output errors in JSON  |
 
 ### CLI Examples
+
 **Basic validation**
+
 ```cmd
 npx safe-env-check env.schema.js
 ```
 
 **Using strict mode**
+
 ```cmd
 npx safe-env-check env.schema.js --strict
 ```
 
 **Using prefix**
+
 ```cmd
 npx safe-env-check env.schema.js --prefix API_
 ```
 
 **Validate production env file**
+
 ```cmd
 npx safe-env-check env.schema.js --env-file .env.production
 ```
 
 **JSON error output**
+
 ```cmd
 npx safe-env-check env.schema.js --format json
 ```
+
 Useful for CI systems.
 
 ## CI/CD Example
+
 Validate environment configuration during deployment.
 
 Example **GitHub Actions step**
+
 ```yaml
 - name: Validate Environment Variables
   run: npx safe-env-check env.schema.js --env-file .env.production --strict
 ```
+
 This prevents deployments with invalid configuration.
 
 ## TypeScript Type Safety
+
 The returned object is fully typed.
+
 ```ts
 const env = validateEnv(schema);
 
-env.PORT // number
-env.NODE_ENV // "development" | "production"
+env.PORT; // number
+env.NODE_ENV; // "development" | "production"
 ```
+
 ## When to Use safe-env-check
+
 - Node.js APIs
 - Microservices
 - Docker containers

@@ -23,5 +23,9 @@ export interface ValidateEnvOptions {
 }
 
 export type InferEnv<T extends EnvSchema> = {
-  [K in keyof T]: EnvTypeMap[T[K]["type"]];
+  [K in keyof T]: T[K]["required"] extends true
+    ? EnvTypeMap[T[K]["type"]]
+    : T[K]["default"] extends EnvTypeMap[T[K]["type"]]
+      ? EnvTypeMap[T[K]["type"]]
+      : EnvTypeMap[T[K]["type"]] | undefined;
 };

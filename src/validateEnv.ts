@@ -1,11 +1,7 @@
-import dotenv from "dotenv";
-
 import { defaultErrorFormatter } from "./errors/errorFormatter";
 import { EnvSchema, InferEnv, ValidateEnvOptions } from "./types";
 import { resolveEnvKey } from "./utils/envResolver";
 import { parseValue } from "./validators";
-
-dotenv.config();
 
 export const validateEnv = <T extends EnvSchema>(
   schema: T,
@@ -17,7 +13,7 @@ export const validateEnv = <T extends EnvSchema>(
   const { strict, prefix, quiet, formatError } = options ?? {};
 
   if (strict) {
-    checkUnknownKeys(schema, prefix);
+    errors.push(...checkUnknownKeys(schema, prefix));
   }
 
   for (const key in schema) {
@@ -25,7 +21,7 @@ export const validateEnv = <T extends EnvSchema>(
     const envKey = resolveEnvKey(key, prefix);
     const rawValue = process.env[envKey];
 
-    if (!rawValue) {
+    if (rawValue === undefined) {
       if (rule.required && rule.default === undefined) {
         errors.push(`${envKey} is required`);
         continue;
@@ -36,7 +32,7 @@ export const validateEnv = <T extends EnvSchema>(
     }
 
     try {
-      result[key] = parseValue(rule, rawValue, envKey);
+      result[key as keyof T] = parseValue(rule, rawValue, envKey);
     } catch (error: unknown) {
       if (error instanceof Error) {
         errors.push(error.message);
@@ -45,6 +41,7 @@ export const validateEnv = <T extends EnvSchema>(
       }
     }
   }
+
   if (errors.length && !quiet) {
     const message = formatError
       ? formatError(errors)
@@ -53,7 +50,7 @@ export const validateEnv = <T extends EnvSchema>(
     throw new Error(message);
   }
 
-  return result as { [k in keyof T]: any };
+  return result as InferEnv<T>;
 };
 
 const checkUnknownKeys = (schema: EnvSchema, prefix?: string) => {
@@ -70,6 +67,8 @@ const checkUnknownKeys = (schema: EnvSchema, prefix?: string) => {
   );
 
   if (unknownKeys.length) {
-    throw new Error(`Unknown env veriables: ${unknownKeys.join(", ")}`);
+    return [`Unknown env variables: ${unknownKeys.join(", ")}`];
   }
+
+  return [];
 };
