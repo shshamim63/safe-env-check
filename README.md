@@ -157,8 +157,10 @@ DEBUG=true
 **Schema**
 
 ```ts
-DEBUG: {
-  type: "boolean";
+const schema = {
+  DEBUG: {
+    type: "boolean";
+  },
 }
 ```
 
@@ -225,9 +227,20 @@ validateEnv(schema, {
 });
 ```
 
-## Dotenv Support
+## Loading Environment Variables
 
-By default, the library loads .env automatically using dotenv.
+`safe-env-check` does **not automatically load `.env` files**.
+
+Load environment variables before calling `validateEnv`, for example using `dotenv`:
+
+```ts
+import dotenv from "dotenv";
+import { validateEnv } from "@safe-hand/safe-env-check";
+
+dotenv.config();
+
+const env = validateEnv(schema);
+```
 
 **Example** `.env`:
 
@@ -235,6 +248,12 @@ By default, the library loads .env automatically using dotenv.
 PORT=3000
 JWT_SECRET=supersecret
 NODE_ENV=development
+```
+
+If you are using the CLI, you can provide a custom environment file:
+
+```bash
+safe-env-check --env-file .env.test
 ```
 
 ## CLI Usage

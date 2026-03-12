@@ -8,6 +8,10 @@ import { version } from "../../package.json";
 import { parseArgs } from "./argsParser";
 import { validateEnv } from "../validateEnv";
 import { printHelp } from "./help";
+import {
+  defaultErrorFormatter,
+  jsonErrorFormatter,
+} from "../errors/errorFormatter";
 
 const args = process.argv.slice(2);
 const options = parseArgs(args);
@@ -49,13 +53,10 @@ try {
     quiet: options.quiet,
     formatError: (errors) => {
       if (options.format === "json") {
-        return JSON.stringify({ errors }, null, 2);
+        return jsonErrorFormatter(errors);
       }
 
-      return (
-        "❌ Environment validation failed:\n" +
-        errors.map((e) => `- ${e}`).join("\n")
-      );
+      return defaultErrorFormatter(errors);
     },
   });
 

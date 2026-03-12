@@ -14,7 +14,14 @@ export const parseArgs = (args: string[]): CliOptions => {
 
   const getArg = (flag: string) => {
     const index = args.indexOf(flag);
-    return index !== -1 ? args[index + 1] : undefined;
+
+    if (index === -1) return undefined;
+
+    const next = args[index + 1];
+
+    if (!next || next.startsWith("--")) return undefined;
+
+    return next;
   };
 
   const hasFlag = (flag: string) => args.includes(flag);
@@ -26,7 +33,7 @@ export const parseArgs = (args: string[]): CliOptions => {
   options.schemaFile = getArg("--schema") || positionalArgs[0];
   options.envFile = getArg("--env-file");
   options.prefix = getArg("--prefix");
-  options.format = getArg("--format") as "json";
+  options.format = getArg("--format") === "json" ? "json" : undefined;
   options.strict = hasFlag("--strict");
   options.quiet = hasFlag("--quiet");
   options.help = hasFlag("--help");

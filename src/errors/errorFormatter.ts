@@ -4,3 +4,6 @@ export const defaultErrorFormatter = (errors: string[]) => {
     errors.map((e) => `- ${e}`).join("\n")
   );
 };
+
+export const jsonErrorFormatter = (errors: string[]) =>
+  JSON.stringify({ errors }, null, 2);
