@@ -25,7 +25,7 @@ safe-env-check prevents these issues **before your app starts**.
 ## Features
 
 - ✅ Type validation (`string`, `number`, `boolean`, `enum`)
-- ✅ Required & default values
+- ✅ Required values
 - ✅ Default values
 - ✅ Enum validation
 - ✅ Strict mode (no unknown variables)
@@ -79,7 +79,7 @@ console.log(env.NODE_ENV); // "development" | "production"
 
 ### Schema Options
 
-Each environment variables supports the following options:
+Each environment variable supports the following options:
 
 | Field      | Type                                           | Description                      |
 | ---------- | ---------------------------------------------- | -------------------------------- |
