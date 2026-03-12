@@ -188,7 +188,7 @@ validateEnv(schema, { strict: true });
 If .env contains variables not defined in the schema:
 
 ```cmd
-Unknown environment variable: SOME_RANDOM_VAR
+Unknown env variables: SOME_RANDOM_VAR
 ```
 
 ### Prefix Support
