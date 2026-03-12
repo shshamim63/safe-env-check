@@ -8,11 +8,14 @@
   "homepage": "https://github.com/shshamim63/safe-env-check#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "bin": {
-    "safe-env-check": "dist/cli.js"
+    "safe-env-check": "dist/cli/index.js"
   },
   "scripts": {
-    "build": "tsup src/index.ts src/cli.ts --dts",
+    "build": "tsup src/index.ts src/cli/index.ts --dts --out-dir dist",
     "dev": "ts-node src/index.ts",
     "test": "jest",
     "lint": "tsc --noEmit"
