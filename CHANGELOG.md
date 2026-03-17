@@ -6,6 +6,14 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.1.5] - 2026-03-17
+
+### Fixed
+
+- Added keywords to the package.json
+
+
+---
 ## [1.1.3] - 2026-03-17
 
 ### Fixed
