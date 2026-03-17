@@ -5,6 +5,9 @@
     "type": "git",
     "url": "https://github.com/shshamim63/safe-env-check.git"
   },
+  "bugs": {
+    "url": "https://github.com/shshamim63/safe-env-check/issues"
+  },
   "keywords": [
     "env",
     "env-validation",
@@ -31,9 +34,9 @@
     "test": "jest",
     "lint": "tsc --noEmit"
   },
-  "author": "",
+  "author": "Shakhawat Hossain",
   "license": "MIT",
-  "description": "",
+  "description": "TypeScript-first environment variable validator with CLI support",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^25.2.3",
