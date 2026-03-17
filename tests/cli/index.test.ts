@@ -18,7 +18,7 @@ const setupSpies = () => {
 };
 
 describe("CLI", () => {
-  it("shows help when --help is passed", async () => {
+  test("shows help when --help is passed", async () => {
     const { logSpy, errorSpy, exitSpy } = setupSpies();
 
     await jest.isolateModulesAsync(async () => {
@@ -44,7 +44,7 @@ describe("CLI", () => {
     exitSpy.mockRestore();
   });
 
-  it("shows version when --version is passed", async () => {
+  test("shows version when --version is passed", async () => {
     const { logSpy, errorSpy, exitSpy } = setupSpies();
 
     await jest.isolateModulesAsync(async () => {
@@ -65,7 +65,7 @@ describe("CLI", () => {
     exitSpy.mockRestore();
   });
 
-  it("fails when schemaFile is missing", async () => {
+  test("fails when schemaFile is missing", async () => {
     const { errorSpy, exitSpy } = setupSpies();
 
     await jest.isolateModulesAsync(async () => {
@@ -90,7 +90,7 @@ describe("CLI", () => {
     exitSpy.mockRestore();
   });
 
-  it("fails when schemaFile does not exist", async () => {
+  test("fails when schemaFile does not exist", async () => {
     const { errorSpy, exitSpy } = setupSpies();
 
     jest.spyOn(fs, "existsSync").mockReturnValue(false);
@@ -117,7 +117,7 @@ describe("CLI", () => {
     exitSpy.mockRestore();
   });
 
-  it("runs successfully with valid schema", async () => {
+  test("runs successfully with valid schema", async () => {
     const { logSpy, exitSpy } = setupSpies();
 
     jest.spyOn(fs, "existsSync").mockReturnValue(true);
@@ -134,7 +134,7 @@ describe("CLI", () => {
       });
 
       const validateMock = jest.fn(() => ({ FOO: "bar" }));
-      jest.doMock("../../src/validateEnv", () => ({
+      jest.doMock("../../src/validateEnv/validateEnv", () => ({
         validateEnv: validateMock,
       }));
 
@@ -144,7 +144,7 @@ describe("CLI", () => {
         expect(err.message).toBe("process.exit:1");
       }
 
-      const { validateEnv } = await import("../../src/validateEnv");
+      const { validateEnv } = await import("../../src/validateEnv/validateEnv");
       expect(validateEnv).toHaveBeenCalledWith(mockSchema, expect.any(Object));
       expect(logSpy).toHaveBeenCalledWith("✅ Environment variables are valid");
     });
@@ -152,7 +152,7 @@ describe("CLI", () => {
     exitSpy.mockRestore();
   });
 
-  it("runs in quiet mode without logging success", async () => {
+  test("runs in quiet mode without logging success", async () => {
     const { logSpy, exitSpy } = setupSpies();
 
     jest.spyOn(fs, "existsSync").mockReturnValue(true);
@@ -165,7 +165,7 @@ describe("CLI", () => {
       jest.doMock(path.resolve(process.cwd(), "schema.ts"), () => mockSchema, {
         virtual: true,
       });
-      jest.doMock("../../src/validateEnv", () => ({
+      jest.doMock("../../src/validateEnv/validateEnv", () => ({
         validateEnv: jest.fn(() => ({ FOO: "bar" })),
       }));
 
@@ -179,7 +179,7 @@ describe("CLI", () => {
     exitSpy.mockRestore();
   });
 
-  it("formats errors as JSON when --format=json", async () => {
+  test("formats errors as JSON when --format=json", async () => {
     const { errorSpy, exitSpy } = setupSpies();
 
     jest.spyOn(fs, "existsSync").mockReturnValue(true);
@@ -198,7 +198,7 @@ describe("CLI", () => {
       const validateMock = jest.fn(() => {
         throw new Error("Validation failed");
       });
-      jest.doMock("../../src/validateEnv", () => ({
+      jest.doMock("../../src/validateEnv/validateEnv", () => ({
         validateEnv: validateMock,
       }));
 
@@ -208,7 +208,7 @@ describe("CLI", () => {
         expect(err.message).toBe("process.exit:1");
       }
 
-      const { validateEnv } = await import("../../src/validateEnv");
+      const { validateEnv } = await import("../../src/validateEnv/validateEnv");
       expect(validateEnv).toHaveBeenCalledWith(mockSchema, expect.any(Object));
       expect(errorSpy).toHaveBeenCalled();
     });

@@ -35,6 +35,7 @@ export type EnvSchema = Record<string, EnvRule>;
 export interface ValidateEnvOptions {
   strict?: boolean;
   prefix?: string;
+  envFile?: string;
   formatError?: (error: string[]) => string;
 }
 

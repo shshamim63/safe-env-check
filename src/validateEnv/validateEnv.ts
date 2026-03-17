@@ -1,7 +1,10 @@
-import { defaultErrorFormatter } from "./errors/errorFormatter";
-import { EnvSchema, InferEnv, ValidateEnvOptions } from "./types";
-import { resolveEnvKey } from "./utils/envResolver";
-import { parseValue } from "./validators";
+import dotenv from "dotenv";
+
+import { defaultErrorFormatter } from "../errors/errorFormatter";
+import { EnvSchema, InferEnv, ValidateEnvOptions } from "../types";
+import { resolveEnvKey } from "../utils/envResolver";
+import { parseValue } from "../validators";
+import { checkUnknownKeys } from "./checkUnknownKeys";
 
 export const validateEnv = <T extends EnvSchema>(
   schema: T,
@@ -10,10 +13,12 @@ export const validateEnv = <T extends EnvSchema>(
   const errors: string[] = [];
   const result: Partial<InferEnv<T>> = {};
 
-  const { strict, prefix, formatError } = options ?? {};
+  const { strict, prefix, formatError, envFile = ".env" } = options ?? {};
+
+  dotenv.config({ path: envFile });
 
   if (strict) {
-    errors.push(...checkUnknownKeys(schema, prefix));
+    errors.push(...checkUnknownKeys(schema, envFile, prefix));
   }
 
   for (const key in schema) {
@@ -51,24 +56,4 @@ export const validateEnv = <T extends EnvSchema>(
   }
 
   return result as InferEnv<T>;
-};
-
-const checkUnknownKeys = (schema: EnvSchema, prefix?: string) => {
-  const schemaKeys = Object.keys(schema).map((k) =>
-    prefix ? `${prefix}${k}` : k,
-  );
-
-  const envKeys = Object.keys(process.env);
-
-  const unknownKeys = envKeys.filter((key) =>
-    prefix
-      ? key.startsWith(prefix) && !schemaKeys.includes(key)
-      : !schemaKeys.includes(key),
-  );
-
-  if (unknownKeys.length) {
-    return [`Unknown env variables: ${unknownKeys.join(", ")}`];
-  }
-
-  return [];
 };

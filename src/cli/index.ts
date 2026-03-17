@@ -6,7 +6,7 @@ import fs from "fs";
 
 import { version } from "../../package.json";
 import { parseArgs } from "./argsParser";
-import { validateEnv } from "../validateEnv";
+import { validateEnv } from "../validateEnv/validateEnv";
 import { printHelp } from "./help";
 import {
   defaultErrorFormatter,

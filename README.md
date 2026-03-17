@@ -217,6 +217,32 @@ const schema = {
 validateEnv(schema, { prefix: "API_" });
 ```
 
+### Env File Support
+
+Useful for defining custom env file.
+
+**Example** `.env.production`:
+
+```bash
+API_PORT=3000
+API_SECRET=123
+```
+
+**Schema:**
+
+```ts
+const schema = {
+  PORT: { type: "number" },
+  SECRET: { type: "string" },
+};
+```
+
+**Usage:**
+
+```ts
+validateEnv(schema, { prefix: "API_", envFile: ".env.production" });
+```
+
 ### Custom Error Formatter
 
 You can control how errors are displayed:

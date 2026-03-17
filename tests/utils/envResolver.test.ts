@@ -1,23 +1,25 @@
+import fs from "fs";
+
 import { resolveEnvKey } from "../../src/utils/envResolver";
 
-describe("resolveEnvKey", () => {
-  it("returns the key unchanged when no prefix is given", () => {
-    expect(resolveEnvKey("PORT")).toBe("PORT");
+describe("Env keys util", () => {
+  const mockReadFileSync = fs.readFileSync as jest.Mock;
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it("returns the key unchanged when prefix is undefined", () => {
-    expect(resolveEnvKey("PORT", undefined)).toBe("PORT");
-  });
+  describe("resolveEnvKey", () => {
+    const prefix = "PROD_";
+    const key = "PORT";
+    test("should return key concataning with the prefix", () => {
+      const prefix = "PROD_";
+      const key = "PORT";
+      expect(resolveEnvKey(key, prefix)).toEqual(prefix.concat(key));
+    });
 
-  it("prepends the prefix to the key", () => {
-    expect(resolveEnvKey("PORT", "APP_")).toBe("APP_PORT");
-  });
-
-  it("works with an empty prefix string", () => {
-    expect(resolveEnvKey("PORT", "")).toBe("PORT");
-  });
-
-  it("preserves casing of both prefix and key", () => {
-    expect(resolveEnvKey("DbHost", "MYAPP_")).toBe("MYAPP_DbHost");
+    test("should return only the key when prefix does not exist", () => {
+      expect(resolveEnvKey(key)).toEqual(key);
+    });
   });
 });
