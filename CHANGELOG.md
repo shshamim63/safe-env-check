@@ -6,6 +6,17 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.1.2] - 2026-03-17
+
+### Fixed
+
+- Env file load issue
+
+### Tests
+
+- Test for the missing code section
+
+---
 
 ## [1.1.1] - 2026-02-21
 
