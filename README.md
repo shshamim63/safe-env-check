@@ -255,20 +255,15 @@ validateEnv(schema, {
 
 ## Loading Environment Variables
 
-`safe-env-check` does **not automatically load `.env` files**.
-
-Load environment variables before calling `validateEnv`, for example using `dotenv`:
+`safe-env-check` uses dotenv to lead the `.env` files\*\*.
 
 ```ts
-import dotenv from "dotenv";
 import { validateEnv } from "@safe-hand/safe-env-check";
-
-dotenv.config();
 
 const env = validateEnv(schema);
 ```
 
-**Example** `.env`:
+**Example** `.env.test`:
 
 ```bash
 PORT=3000
