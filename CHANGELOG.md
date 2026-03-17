@@ -6,6 +6,13 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.1.3] - 2026-03-17
+
+### Fixed
+
+- Updated readme with the correct dotenv use declaration
+
+---
 ## [1.1.2] - 2026-03-17
 
 ### Fixed
