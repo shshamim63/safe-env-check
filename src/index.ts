@@ -1,3 +1,2 @@
-export { validateEnv } from "./validateEnv";
-
+export { validateEnv } from "./validateEnv/validateEnv";
 export * from "./types";
