@@ -3,6 +3,9 @@
 ![npm](https://img.shields.io/npm/v/@safe-hand/safe-env-check)
 ![license](https://img.shields.io/npm/l/@safe-hand/safe-env-check)
 ![downloads](https://img.shields.io/npm/dm/@safe-hand/safe-env-check)
+![TypeScript](https://img.shields.io/badge/TypeScript-Supported-blue)
+![CI](https://github.com/shshamim63/safe-env-check/actions/workflows/release.yml/badge.svg)
+![Coverage](https://img.shields.io/codecov/c/github/shshamim63/safe-env-check)
 
 A tiny TypeScript-first environment variable validator that ensures your application starts with a correct configuration.
 
@@ -388,6 +391,14 @@ env.NODE_ENV; // "development" | "production"
 - Serverless functions
 - Monorepos
 - Multi-environment deployments
+
+## Contributing
+
+Contributions are welcome! Please open an issue or PR.
+
+## Changelog
+
+See https://github.com/yourname/safe-env-check/releases
 
 ## License
 

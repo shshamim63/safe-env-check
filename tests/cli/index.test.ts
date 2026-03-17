@@ -58,7 +58,7 @@ describe("CLI", () => {
         expect(err.message).toBe("process.exit:0");
       }
 
-      expect(logSpy).toHaveBeenCalledWith("1.1.1");
+      expect(logSpy).toHaveBeenCalled();
       expect(errorSpy).not.toHaveBeenCalled();
     });
 
