@@ -7,11 +7,24 @@ and [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [1.1.1] - 21-02-2026
+## [1.1.1] - 2026-02-21
+
+### Fixed
+
+- Updated GitHub secret usage approach in release workflow
+
+---
+
+## [1.1.0] - 2026-02-20
 
 ### Added
 
-- Placeholder for upcoming changes
+- Enriched CLI functionalities
+
+### Fixed
+
+- Fixed `--schema` flag parsing issue
+- Fixed GitHub Actions error
 
 ---
 
