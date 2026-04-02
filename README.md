@@ -7,23 +7,60 @@
 ![CI](https://github.com/shshamim63/safe-env-check/actions/workflows/release.yml/badge.svg)
 ![Coverage](https://img.shields.io/codecov/c/github/shshamim63/safe-env-check)
 
-A tiny TypeScript-first environment variable validator that ensures your application starts with a correct configuration.
+> **Fail fast. Validate early. Deploy safely.**
 
-It validates process.env using a schema and provides strong **TypeScript typing**, **CLI validation**, and **CI/CD integration**.
+A strict, **TypeScript-first** environment validator that ensures your application never starts—or deploys—with invalid configuration.
+
+Built for developers who want **zero surprises in production** and reliable **CI/CD validation**.
+
+---
+
+## 🚀 Quick Start (30 seconds)
+
+```ts
+import { validateEnv } from "@safe-hand/safe-env-check";
+
+const env = validateEnv({
+  PORT: { type: "number", default: 3000 },
+  NODE_ENV: {
+    type: "enum",
+    values: ["development", "production"],
+    default: "development",
+  },
+});
+
+env.PORT; // number
+env.NODE_ENV; // "development" | "production"
+```
+
+---
 
 ## Why safe-env-check?
 
-Environment variables are string-based and error-prone.
+Environment variables are fragile and error-prone.
 
 Common problems:
 
-- Missing required variables
-- Incorrect types
-- Unexpected environment variables
-- Misconfigured deployments
-- Incorrect .env files in CI/CD
+- Missing required variables → runtime crashes
+- Incorrect types → hidden bugs
+- Unexpected variables → misconfigurations
+- Broken `.env` files → failed deployments
+- CI/CD pipelines deploying invalid configs
 
-safe-env-check prevents these issues **before your app starts**.
+**safe-env-check eliminates these risks before your app runs.**
+
+---
+
+## 🔥 What makes it different?
+
+Unlike general-purpose validators, **safe-env-check is built specifically for environment validation workflows**:
+
+- ✅ Fail fast before app startup
+- ✅ Detect unknown variables (strict mode)
+- ✅ Validate configs in CI/CD pipelines
+- ✅ Support multi-service setups with prefixes
+
+---
 
 ## Features
 
@@ -35,9 +72,9 @@ safe-env-check prevents these issues **before your app starts**.
 - ✅ Prefix support (multi-environment setup)
 - ✅ dotenv integration
 - ✅ Custom error formatting
-- ✅ Type-safe output for TypeScript
-- ✅ CLI support
-- ✅ CI/CD friendly
+- ✅ Fully type-safe output
+- ✅ CLI support (CI/CD ready)
+- ✅ Designed for production safety
 
 ---
 
@@ -52,6 +89,8 @@ or
 ```bash
 yarn add @safe-hand/safe-env-check
 ```
+
+---
 
 ## Basic Usage
 
@@ -80,18 +119,22 @@ console.log(env.PORT); // number
 console.log(env.NODE_ENV); // "development" | "production"
 ```
 
-### Schema Options
+---
+
+## Schema Options
 
 Each environment variable supports the following options:
 
-| Field      | Type                                           | Description                      |
-| ---------- | ---------------------------------------------- | -------------------------------- |
-| `type`     | `"string"  or "number" or "boolean" or "enum"` | Expected value type              |
-| `required` | `boolean`                                      | Whether the variable is required |
-| `default`  | `any`                                          | Default value if not provided    |
-| `values`   | `string[]`                                     | Required for `enum` type         |
+| Field      | Type                                          | Description                      |
+| ---------- | --------------------------------------------- | -------------------------------- |
+| `type`     | `"string" or "number" or "boolean" or "enum"` | Expected value type              |
+| `required` | `boolean`                                     | Whether the variable is required |
+| `default`  | `any`                                         | Default value if not provided    |
+| `values`   | `string[]`                                    | Required for `enum` type         |
 
-### Example Schema
+---
+
+## Example Schema
 
 ```ts
 const schema = {
@@ -105,7 +148,9 @@ const schema = {
 };
 ```
 
-### Default Values
+---
+
+## Default Values
 
 If a variable is missing, the default value will be used.
 
@@ -123,11 +168,13 @@ const schema = {
 
 **Result:**
 
-```cmd
-PORT = 3000
+```bash
+PORT=3000
 ```
 
-### Required Variables
+---
+
+## Required Variables
 
 ```ts
 const schema = {
@@ -137,39 +184,27 @@ const schema = {
 
 If missing:
 
-```cmd
+```bash
 Error ❌ Environment validation failed:
 - DATABASE_URL is required
 ```
 
-### Boolean Parsing
+---
 
-Boolean values accept:
+## Boolean Parsing
+
+Accepted values:
 
 ```bash
 true
 false
 ```
 
-**Example:**
+---
 
-```cmd
-DEBUG=true
-```
+## Enum Validation
 
-**Schema**
-
-```ts
-const schema = {
-  DEBUG: {
-    type: "boolean",
-  },
-};
-```
-
-### Enum Validation
-
-Restrict values to a predefined list.
+Restrict values to a predefined list:
 
 ```ts
 NODE_ENV: {
@@ -180,38 +215,31 @@ NODE_ENV: {
 
 Invalid values will throw an error.
 
-### Strict Mode
+---
 
-Prevent unexpected environment variables.
+## Strict Mode (recommended)
+
+Prevent unexpected environment variables:
 
 ```ts
 validateEnv(schema, { strict: true });
 ```
 
-If .env contains variables not defined in the schema:
-
-```cmd
+```bash
 Unknown env variables: SOME_RANDOM_VAR
 ```
 
-### Prefix Support
+---
 
-Useful for multi-service or multi-tenant configs.
+## Prefix Support
 
-**Example** `.env`:
+Useful for multi-service or multi-tenant configurations.
+
+**Example `.env`:**
 
 ```bash
 API_PORT=3000
 API_SECRET=123
-```
-
-**Schema:**
-
-```ts
-const schema = {
-  PORT: { type: "number" },
-  SECRET: { type: "string" },
-};
 ```
 
 **Usage:**
@@ -220,35 +248,21 @@ const schema = {
 validateEnv(schema, { prefix: "API_" });
 ```
 
-### Env File Support
+---
 
-Useful for defining custom env file.
+## Env File Support
 
-**Example** `.env.production`:
-
-```bash
-API_PORT=3000
-API_SECRET=123
-```
-
-**Schema:**
+Load custom env files:
 
 ```ts
-const schema = {
-  PORT: { type: "number" },
-  SECRET: { type: "string" },
-};
+validateEnv(schema, {
+  envFile: ".env.production",
+});
 ```
 
-**Usage:**
+---
 
-```ts
-validateEnv(schema, { prefix: "API_", envFile: ".env.production" });
-```
-
-### Custom Error Formatter
-
-You can control how errors are displayed:
+## Custom Error Formatter
 
 ```ts
 validateEnv(schema, {
@@ -256,149 +270,100 @@ validateEnv(schema, {
 });
 ```
 
+---
+
 ## Loading Environment Variables
 
-`safe-env-check` uses dotenv to lead the `.env` files\*\*.
+`safe-env-check` uses `dotenv` to automatically load `.env` files.
 
-```ts
-import { validateEnv } from "@safe-hand/safe-env-check";
+---
 
-const env = validateEnv(schema);
-```
+## CLI Usage (CI/CD ready)
 
-**Example** `.env.test`:
+Validate environment variables **without writing code**:
 
 ```bash
-PORT=3000
-JWT_SECRET=supersecret
-NODE_ENV=development
-```
-
-If you are using the CLI, you can provide a custom environment file:
-
-```bash
-safe-env-check --env-file .env.test
-```
-
-## CLI Usage
-
-You can validate environment variables without writing code.
-
-This is useful for CI/CD pipelines.
-
-```ts
-module.exports = {
-  PORT: { type: "number", required: true },
-  NODE_ENV: { type: "enum", values: ["dev", "prod"], default: "dev" },
-};
-```
-
-**Run validation:**
-
-```cmd
-npx safe-env-check env.schema.js
-```
-
-or
-
-```cmd
-npx safe-env-check --schema env.schema.js
-```
-
-### CLI Options
-
-| Flag            | Description                                                                                    |
-| --------------- | ---------------------------------------------------------------------------------------------- |
-| `--schema`      | schema file path                                                                               |
-| `--env-file`    | load a custom env file                                                                         |
-| `--strict`      | enable strict mode                                                                             |
-| `--prefix`      | env variable prefix                                                                            |
-| `--format json` | output errors in JSON                                                                          |
-| `--quiet`       | Suppress the success message "✅ Environment variables are valid" (errors still exit non-zero) |
-
-|
-
-### CLI Examples
-
-**Basic validation**
-
-```cmd
-npx safe-env-check env.schema.js
-```
-
-**Using strict mode**
-
-```cmd
 npx safe-env-check env.schema.js --strict
 ```
 
-**Using prefix**
+Perfect for:
 
-```cmd
+- CI pipelines
+- Docker builds
+- Deployment validation
+
+---
+
+### CLI Options
+
+| Flag            | Description              |
+| --------------- | ------------------------ |
+| `--schema`      | Schema file path         |
+| `--env-file`    | Load custom env file     |
+| `--strict`      | Enable strict mode       |
+| `--prefix`      | Env variable prefix      |
+| `--format json` | Output errors in JSON    |
+| `--quiet`       | Suppress success message |
+
+---
+
+### CLI Examples
+
+```bash
+npx safe-env-check env.schema.js
+npx safe-env-check env.schema.js --strict
 npx safe-env-check env.schema.js --prefix API_
-```
-
-**Suppress success message**
-
-```cmd
-safe-env-check env.schema.js --quiet
-```
-
-**Validate production env file**
-
-```cmd
 npx safe-env-check env.schema.js --env-file .env.production
-```
-
-**JSON error output**
-
-```cmd
 npx safe-env-check env.schema.js --format json
 ```
 
-Useful for CI systems.
+---
 
 ## CI/CD Example
-
-Validate environment configuration during deployment.
-
-Example **GitHub Actions step**
 
 ```yaml
 - name: Validate Environment Variables
   run: npx safe-env-check env.schema.js --env-file .env.production --strict
 ```
 
-This prevents deployments with invalid configuration.
+Prevents deployments with invalid configuration.
+
+---
 
 ## TypeScript Type Safety
-
-The returned object is fully typed.
 
 ```ts
 const env = validateEnv(schema);
 
 env.PORT; // number
-env.NODE_ENV; // "development" | "production"
+env.NODE_ENV; // inferred union type
 ```
+
+---
 
 ## When to Use safe-env-check
 
 - Node.js APIs
+- NestJS applications
 - Microservices
 - Docker containers
 - CI/CD pipelines
 - Serverless functions
 - Monorepos
-- Multi-environment deployments
+
+---
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or PR.
+Contributions are welcome! Open an issue or PR.
+
+---
 
 ## Changelog
 
-See https://github.com/yourname/safe-env-check/releases
+https://github.com/shshamim63/safe-env-check/releases
+
+---
 
 ## License
 
