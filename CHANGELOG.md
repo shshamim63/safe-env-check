@@ -6,21 +6,36 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and [Semantic Versioning](https://semver.org/).
 
 ---
+
+## [Unreleased]
+
+---
+
+## [1.1.7] - 2026-04-02
+
+### Changed
+
+- Improved README for better clarity and developer onboarding
+- Enhanced npm discoverability with optimized keywords
+
+---
+
 ## [1.1.5] - 2026-03-17
 
 ### Fixed
 
-- Added keywords to the package.json
-
+- Improved package discoverability on npm
 
 ---
+
 ## [1.1.3] - 2026-03-17
 
 ### Fixed
 
-- Updated readme with the correct dotenv use declaration
+- Fixed incorrect dotenv usage in documentation
 
 ---
+
 ## [1.1.2] - 2026-03-17
 
 ### Fixed
@@ -29,7 +44,7 @@ and [Semantic Versioning](https://semver.org/).
 
 ### Tests
 
-- Test for the missing code section
+- Added tests for missing code paths
 
 ---
 
